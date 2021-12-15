@@ -1,4 +1,5 @@
 export type RootStackParamsList = {
     Home: {},
-    Article: { id: string, slug: string }
-};
+    Article: { id: string, slug: string },
+    Contacts: {}
+}

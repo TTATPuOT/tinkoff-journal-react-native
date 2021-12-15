@@ -15,12 +15,36 @@ import Animated, {
     useSharedValue
 } from 'react-native-reanimated';
 import ignoreNodes from '@t/ignoreNodes';
+import { useFocusEffect } from '@react-navigation/native';
 
 type NavigationProps = NativeStackScreenProps<RootStackParamsList, 'Article'>;
 
 const Article = (props: NavigationProps) => {
     const scrollY = useSharedValue(0);
     const [data, setData] = useState<ArticleContentResponse>();
+
+    useFocusEffect(
+        useCallback(() => {
+            setData(undefined);
+            Api.getArticle(props.route.params.id)
+                .then((data) => {
+                    const nodes: ArticleContentDataNodeResponse[] = [];
+                    for (const [index, node] of data.content.nodes.entries()) {
+                        if (node.kind === 'cut') {
+                            const childs = node.children;
+                            if (childs) {
+                                nodes.splice(index, 1, ...childs);
+                            }
+                        } else {
+                            nodes.push(node);
+                        }
+                    }
+
+                    data.content.nodes = nodes;
+                    setData(data);
+                });
+        }, [props.route.params.id])
+    );
 
     const imageUrl = useMemo<string|undefined>(() => {
         if (data) return getImageFromArticle(data);
@@ -72,26 +96,6 @@ const Article = (props: NavigationProps) => {
             <ArticleNode {...item} />
         </View>
     }, []);
-
-    useEffect(() => {
-        Api.getArticle(props.route.params.id)
-            .then((data) => {
-                const nodes: ArticleContentDataNodeResponse[] = [];
-                for (const [index, node] of data.content.nodes.entries()) {
-                    if (node.kind === 'cut') {
-                        const childs = node.children;
-                        if (childs) {
-                            nodes.splice(index, 1, ...childs);
-                        }
-                    } else {
-                        nodes.push(node);
-                    }
-                }
-
-                data.content.nodes = nodes;
-                setData(data);
-            });
-    }, [props.route.params.id]);
 
     if (!data) return <LoadingScreen />;
 

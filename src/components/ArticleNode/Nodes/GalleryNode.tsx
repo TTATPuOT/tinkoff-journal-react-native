@@ -6,6 +6,7 @@ import { Image, StyleSheet, useWindowDimensions, View } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import FitImage from '@components/FitImage';
 import removeHtml from '@helpers/removeHtml';
+import getAllChildsAsString from '@helpers/getAllChildsAsString';
 
 const GalleryNode = (props: ArticleContentDataNodeFotorama) => {
     const { width } = useWindowDimensions();
@@ -24,9 +25,18 @@ const GalleryNode = (props: ArticleContentDataNodeFotorama) => {
     }, [props.children]);
 
     const renderItem = useCallback(({ item }) => {
+        let caption: string;
+
+        //@ts-ignore
+        if (Array.isArray(item.caption)) caption = item.caption.filter(i => !!i.content).map(i => i.content);
+        else caption = removeHtml(item.caption);
+
+        console.log(item.caption);
+        console.log(caption);
+
         return <View style={styles.imageContainer}>
             <View style={styles.image}>
-                <Text style={styles.text} category="p2">{removeHtml(item.caption)}</Text>
+                <Text style={styles.text} category="p2">{caption}</Text>
                 <FitImage uri={item.object.files.original.filepath} reducer={60} />
             </View>
         </View>

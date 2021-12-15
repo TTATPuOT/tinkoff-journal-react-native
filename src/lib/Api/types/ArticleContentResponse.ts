@@ -83,7 +83,7 @@ export interface ArticleContentDataNodeImage extends ArticleContentDataNodeBase 
     kind: "image"
     slug: string
     object: FileResponse
-    caption: string
+    caption: string|ArticleContentDataNodeResponse[]
     link: string|null
     noretina: boolean
     bordered: boolean
@@ -96,7 +96,7 @@ export interface ArticleContentDataNodeVideo extends ArticleContentDataNodeBase 
     kind: "video"
     video_id: string
     url: string
-    caption: string
+    caption: string|ArticleContentDataNodeResponse[]
     preview: string
     ratio: number
     fullsize: boolean

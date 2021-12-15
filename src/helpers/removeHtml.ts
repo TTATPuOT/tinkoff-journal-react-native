@@ -1,3 +1,3 @@
 export default (string: string): string => {
-    return string.replace(/<[^>]*>?/gm, '');
+    return string.toString().replace(/<[^>]*>?/gm, '');
 }
