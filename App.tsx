@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import Feed from '@components/Feed';
 import * as eva from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
@@ -10,10 +10,15 @@ import 'moment/locale/ru';
 import Article from '@components/Article';
 import { RootStackParamsList } from '@t/Navigation';
 import { Share } from 'react-native';
+import SplashScreen from 'react-native-splash-screen';
 
 const Drawer = createStackNavigator<RootStackParamsList>();
 
 const App = () => {
+    useEffect(() => {
+        SplashScreen.hide();
+    }, []);
+
     return <>
         <IconRegistry icons={EvaIconsPack} />
         <ApplicationProvider {...eva} theme={eva.light}>

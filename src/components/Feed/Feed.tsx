@@ -30,8 +30,6 @@ const Feed = (props: FeedProps) => {
         setItems(items => [...items, ...i].filter((v, i, a) => a.indexOf(v) === i));
         setPage(page => page + 1);
         setLoading(false);
-
-        SplashScreen.hide();
     }, [page, loading]);
     const renderItem = useCallback(({ item }) => <Card data={item} />, []);
 
