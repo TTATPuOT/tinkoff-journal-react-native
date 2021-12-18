@@ -10,6 +10,7 @@ module.exports = {
                     "@components": "./src/components",
                     "@lib": "./src/lib",
                     "@t": "./src/types",
+                    "@img": "./src/img",
                     "@helpers": "./src/helpers",
                 }
             }

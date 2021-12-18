@@ -5,7 +5,7 @@ import getAllChildsAsString from '@helpers/getAllChildsAsString';
 import { StyleSheet, View } from 'react-native';
 
 const PanelNode = (props: ArticleContentDataNodePanel) => {
-    const text = useMemo<string>(() => getAllChildsAsString(props), [props]);
+    const text = useMemo<string>(() => getAllChildsAsString(props.children), [props]);
 
     return <View style={[styles.container]}>
         <Text>{text}</Text>

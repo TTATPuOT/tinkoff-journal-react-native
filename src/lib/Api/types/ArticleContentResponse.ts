@@ -35,6 +35,9 @@ export type ArticleContentDataNodeResponse = ArticleContentDataNodeAuthor
     | ArticleContentDataNodeExplanation
     | ArticleContentDataNodeTableContainer
     | ArticleContentDataNodeTableCitation
+    | ArticleContentDataNodeSource
+    | ArticleContentDataNodeExample
+    | ArticleContentDataNodeA
 
 export enum HtmlElementType {
     p = 'p1',
@@ -47,7 +50,7 @@ export enum HtmlElementType {
     span = 's1',
     lead = 'h5',
     br = 'br',
-    strong = 'strong',
+    strong = 'strong'
 }
 export interface ArticleContentDataNodeBase {
     kind: string
@@ -132,7 +135,7 @@ export interface ArticleContentDataNodePanel extends ArticleContentDataNodeBase 
 export interface ArticleContentDataNodeCommunityAuthor extends ArticleContentDataNodeBase {
     kind: 'community-author'
     name: string
-    description: string
+    description: string|ArticleContentDataNodeResponse[]
     image: FileResponse,
     "consultant": string,
     "is_anonymous": boolean,
@@ -155,8 +158,9 @@ export interface ArticleContentDataNodeDiv extends ArticleContentDataNodeBase {
     class: string[]
 }
 export interface ArticleContentDataNodeOl extends ArticleContentDataNodeBase {
-    kind: 'ol'|'ul',
+    kind: 'ol'|'ul'|'summary',
     style: string
+    title?: string
     children?: ArticleContentDataNodeLi[]
 }
 export interface ArticleContentDataNodeLi extends ArticleContentDataNodeBase {
@@ -189,4 +193,18 @@ export interface ArticleContentDataNodeTableContainer extends ArticleContentData
 }
 export interface ArticleContentDataNodeTableCitation extends ArticleContentDataNodeBase {
     kind: 'citation'
+}
+export interface ArticleContentDataNodeSource extends ArticleContentDataNodeBase {
+    kind: 'source',
+    items: {
+        name: string
+        href: string
+    }[]
+}
+export interface ArticleContentDataNodeExample extends ArticleContentDataNodeBase {
+    kind: 'example'
+}
+export interface ArticleContentDataNodeA extends ArticleContentDataNodeBase {
+    kind: 'a'
+    href: string
 }

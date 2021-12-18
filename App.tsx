@@ -3,7 +3,7 @@ import React, { useCallback, useEffect } from 'react';
 import Feed from '@components/Feed';
 import * as eva from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
-import { ApplicationProvider, Icon, IconRegistry } from '@ui-kitten/components';
+import { ApplicationProvider, Icon, IconRegistry, Text } from '@ui-kitten/components';
 import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/native';
 import 'moment/locale/ru';
 import Article from '@components/Article';
@@ -12,6 +12,19 @@ import { RootStackParamsList } from '@t/Navigation';
 import { Share } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { HeaderTitleProps } from '@react-navigation/elements/src/types';
+import Logo from '@img/logo.svg';
+import { LinkingOptions } from '@react-navigation/native/lib/typescript/src/types';
+
+const linking: LinkingOptions<RootStackParamsList> = {
+    prefixes: ['http://journal.tinkoff.ru', 'https://journal.tinkoff.ru', 'tinkoffjournal://'],
+    config: {
+        screens: {
+            Home: '',
+            Article: 'news/:id'
+        }
+    }
+};
 
 const Drawer = createDrawerNavigator<RootStackParamsList>();
 
@@ -23,15 +36,17 @@ const App = () => {
     return <>
         <IconRegistry icons={EvaIconsPack} />
         <ApplicationProvider {...eva} theme={eva.light}>
-            <NavigationContainer>
-                <Drawer.Navigator initialRouteName="Home" screenOptions={{
-                    headerShadowVisible: false,
-                    headerTitleStyle: {
-                        fontSize: 16
-                    },
-                    headerLeft: headerLeft,
-                    headerRight: headerRight,
-                }}>
+            <NavigationContainer linking={linking}>
+                <Drawer.Navigator
+                    initialRouteName="Home"
+                    screenOptions={{
+                        headerShadowVisible: false,
+                        headerTitleStyle: { fontSize: 16 },
+                        headerLeft: headerLeft,
+                        headerRight: headerRight,
+                        headerTitle: headerTitle
+                    }}
+                >
                     <Drawer.Screen name="Home" component={Feed} options={{ title: 'Лента' }} />
                     <Drawer.Screen name="Article" component={Article} options={{
                         title: '',
@@ -43,6 +58,16 @@ const App = () => {
         </ApplicationProvider>
     </>;
 };
+
+function headerTitle(props: HeaderTitleProps) {
+    const route = useRoute();
+
+    if (route.name === "Home") {
+        return <Logo width={200} height={35} fill="#000" />
+    }
+
+    return <Text>{props.children}</Text>
+}
 
 function headerLeft() {
     const navigation = useNavigation();
@@ -74,11 +99,11 @@ function headerRight() {
             //@ts-ignore
             Share.share({
                 //@ts-ignore
-                url: `https://journal.tinkoff.ru/${route.params.slug}`,
+                title: route.params.title,
                 //@ts-ignore
-                title: `https://journal.tinkoff.ru/${route.params.slug}`,
-                //@ts-ignore
-                message: `https://journal.tinkoff.ru/${route.params.slug}`,
+                message: `${route.params.title}: https://journal.tinkoff.ru/${route.params.slug}`,
+            }, {
+                dialogTitle: 'Поделиться статьёй'
             });
         }
     }, [route.params]);

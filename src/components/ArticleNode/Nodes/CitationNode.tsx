@@ -4,7 +4,7 @@ import { Text } from '@ui-kitten/components';
 import getAllChildsAsString from '@helpers/getAllChildsAsString';
 
 const CitationNode = (props: ArticleContentDataNodeTableCitation) => {
-    const text = useMemo<string>(() => getAllChildsAsString(props), [props.children]);
+    const text = useMemo<string>(() => getAllChildsAsString(props.children), [props.children]);
 
     return <Text category="h2">{text}</Text>
 };

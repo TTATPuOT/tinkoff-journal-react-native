@@ -5,7 +5,7 @@ import getAllChildsAsString from '@helpers/getAllChildsAsString';
 
 const HtmlNode = (props: ArticleContentDataNodeHtml) => {
     const text = useMemo<string>(() => {
-        if (props.children) return getAllChildsAsString(props);
+        if (props.children) return getAllChildsAsString(props.children);
         return '';
     }, [props.children]);
 

@@ -6,7 +6,6 @@ import VersionNumber from 'react-native-version-number';
 const Contacts = () => {
     return <Layout style={styles.container}>
         <ScrollView>
-            <Text category="h5">Контакты</Text>
             <Text>
                 Вся информация взята с сайта <Text
                     onPress={() => Linking.openURL('https://journal.tinkoff.ru/')}

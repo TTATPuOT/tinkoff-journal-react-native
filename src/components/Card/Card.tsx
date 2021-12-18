@@ -13,7 +13,12 @@ export interface CardProps {
 const Card = (props: CardProps) => {
     const { data } = props;
 
-    const { onPress } = useLinkProps({ to: { screen: 'Article', params: { id: data.id, slug: data.slug } } });
+    const { onPress } = useLinkProps({
+        to: {
+            screen: 'Article',
+            params: { id: data.id, slug: data.slug, title: data.title }
+        }
+    });
 
     const image = useMemo<string|undefined>(() => getImageFromArticle(data), [data.cover]);
     const flow = useMemo<React.ReactNode>(() => {

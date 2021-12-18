@@ -61,6 +61,7 @@
     "paths": {
       "@components/*": ["src/components/*"],
       "@lib/*": ["src/lib/*"],
+      "@img/*": ["src/img/*"],
       "@t/*": ["src/types/*"],
       "@helpers/*": ["src/helpers/*"],
     }

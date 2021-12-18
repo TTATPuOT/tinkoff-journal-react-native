@@ -5,7 +5,7 @@ import getAllChildsAsString from '@helpers/getAllChildsAsString';
 import { StyleSheet } from 'react-native';
 
 const TableHeadingNode = (props: ArticleContentDataNodeTableHeading) => {
-    const text = useMemo<string>(() => getAllChildsAsString(props), [props.children]);
+    const text = useMemo<string>(() => getAllChildsAsString(props.children), [props.children]);
 
     return <Text category="h5" style={styles.text}>{text}</Text>
 };

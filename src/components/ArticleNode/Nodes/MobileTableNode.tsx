@@ -25,9 +25,9 @@ const MobileTableNode = (props: ArticleContentDataNodeMobileTable) => {
                             if (item.kind === 'div' && item.children) {
 
                                 if (item.class.some(c => c.includes('key'))) {
-                                    rowData.key = getAllChildsAsString(item).trim();
+                                    rowData.key = getAllChildsAsString(item.children).trim();
                                 } else if (item.class.some(c => c.includes('value'))) {
-                                    rowData.values.push(getAllChildsAsString(item).trim());
+                                    rowData.values.push(getAllChildsAsString(item.children).trim());
                                 }
                             }
                         }

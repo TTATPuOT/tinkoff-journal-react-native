@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
-import Logo from './img/logo.svg';
+import Logo from '@img/logo.svg';
 import MaskedView from '@react-native-masked-view/masked-view';
 import Animated, {
     useSharedValue,

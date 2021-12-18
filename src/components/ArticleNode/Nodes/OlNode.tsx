@@ -12,7 +12,7 @@ const OlNode = (props: ArticleContentDataNodeOl) => {
             array.push(...props.children.map((c, key) => {
                 return <View style={styles.li} key={key}>
                     <View style={styles.dot} />
-                    <Text category="p1">{getAllChildsAsString(c)}</Text>
+                    <Text category="p1">{getAllChildsAsString(c.children)}</Text>
                 </View>
             }));
         }
@@ -21,7 +21,10 @@ const OlNode = (props: ArticleContentDataNodeOl) => {
     }, [props.children]);
 
 
-    return <View style={styles.container}>{items}</View>
+    return <View style={styles.container}>
+        {!!props.title && <Text category="h4">{props.title}</Text>}
+        {items}
+    </View>
 };
 
 const styles = StyleSheet.create({

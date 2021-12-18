@@ -1,37 +1,26 @@
 import { ArticleContentDataNodeResponse } from '@lib/Api/types/ArticleContentResponse';
-import shortcode from '@wordpress/shortcode';
+import formatTextContent from './formatTextContent';
 
-const getAllChildsAsString = (item: ArticleContentDataNodeResponse): string => {
-    if (item.children) {
-        const array: string[] = [];
+const getAllChildsAsString = (items: ArticleContentDataNodeResponse[]|undefined = undefined): string => {
+    const array: string[] = [];
 
-        for (const child of item.children) {
-            //TODO: Доделать красивое отображение текстовых виджетов
+    if (items) {
+        for (const child of items) {
             if (child.kind === 'text') {
-                let content: string = child.content;
-                const d = /\[.+]/gm.exec(content);
-                if (d) {
-                    for (const i of d) {
-                        const data = shortcode.attrs(i);
-                        if (data.named.placeholder) content = content.replace(i, data.named.placeholder);
-                    }
-                }
-                array.push(content);
+                array.push(formatTextContent(child.content));
             } else if (child.kind === 'br') {
                 array.push('\n');
             }
 
             if (child.children) {
-                const childs = getAllChildsAsString(child);
+                //@ts-ignore
+                const childs = getAllChildsAsString(child.children);
                 if (childs.length > 0) array.push(...childs);
             }
         }
-
-        //@ts-ignore
-        return array.join('');
     }
 
-    return '';
+    return array.join('');
 }
 
 export default getAllChildsAsString;

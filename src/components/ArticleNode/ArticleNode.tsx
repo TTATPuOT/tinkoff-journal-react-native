@@ -17,6 +17,8 @@ import OlNode from '@components/ArticleNode/Nodes/OlNode';
 import TableHeadingNode from '@components/ArticleNode/Nodes/TableHeadingNode';
 import MobileTableNode from '@components/ArticleNode/Nodes/MobileTableNode';
 import CitationNode from '@components/ArticleNode/Nodes/CitationNode';
+import SourceNode from '@components/ArticleNode/Nodes/SourceNode';
+import ExampleNode from '@components/ArticleNode/Nodes/ExampleNode';
 
 const ArticleNode = (props: ArticleContentDataNodeResponse) => {
     if (ignoreNodes.includes(props.kind)) return null;
@@ -35,7 +37,7 @@ const ArticleNode = (props: ArticleContentDataNodeResponse) => {
         return <CommunityAuthor {...props} />
     } else if (props.kind === "fotorama") {
         return <GalleryNode {...props} />
-    } else if (props.kind === 'ul' || props.kind === 'ol') {
+    } else if (props.kind === 'ul' || props.kind === 'ol' || props.kind === 'summary') {
         return <OlNode {...props} />
     } else if (props.kind === "table-heading") {
         return <TableHeadingNode {...props} />
@@ -43,6 +45,10 @@ const ArticleNode = (props: ArticleContentDataNodeResponse) => {
         return <MobileTableNode {...props} />
     } else if (props.kind === "citation") {
         return <CitationNode {...props} />
+    } else if (props.kind === "source") {
+        return <SourceNode {...props} />
+    } else if (props.kind === "example") {
+        return <ExampleNode {...props} />
     }
 
     return <Text

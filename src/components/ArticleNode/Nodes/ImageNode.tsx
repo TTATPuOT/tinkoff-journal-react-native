@@ -3,11 +3,16 @@ import { ArticleContentDataNodeImage } from '@lib/Api/types/ArticleContentRespon
 import FitImage from '@components/FitImage';
 import DescriptionNode from '@components/ArticleNode/Nodes/DescriptionNode';
 import removeHtml from '@helpers/removeHtml';
+import getAllChildsAsString from '@helpers/getAllChildsAsString';
 
 const ImageNode = (props: ArticleContentDataNodeImage) => {
     const caption = useMemo<string>(() => {
-        if (!props.caption) return '';
-        return removeHtml(props.caption);
+        const caption = typeof props.caption === 'string'
+            ? props.caption
+            //@ts-ignore
+            : getAllChildsAsString(props.caption);
+
+        return removeHtml(caption);
     }, [props.caption]);
 
     if (props.object.files) {
